@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #quizContainer {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #question {
+            padding: 10px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        #options {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .option {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #eee;
+        }
+
+        #result {
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #nextBtn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: none;
+        }
+
+        #nextBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="quizContainer">
+        <div id="question"></div>
+        <div id="options"></div>
+        <div id="result"></div>
+        <button id="nextBtn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Paris", "Madrid", "Rome"],
+                correctAnswer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Mars", "Venus", "Jupiter", "Saturn"],
+                correctAnswer: "Mars"
+            },
+            {
+                question: "What is the largest mammal?",
+                options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+                correctAnswer: "Blue Whale"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userScore = 0;
+
+        function loadQuestion() {
+            const questionDiv = document.getElementById('question');
+            const optionsDiv = document.getElementById('options');
+            const nextBtn = document.getElementById('nextBtn');
+            const resultDiv = document.getElementById('result');
+
+            const currentQuizData = quizData[currentQuestion];
+
+            questionDiv.textContent = currentQuizData.question;
+
+            optionsDiv.innerHTML = '';
+            currentQuizData.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('option');
+                optionDiv.textContent = option;
+                optionDiv.onclick = function () {
+                    checkAnswer(index);
+                };
+                optionsDiv.appendChild(optionDiv);
+            });
+
+            resultDiv.textContent = '';
+            nextBtn.style.display = 'none';
+        }
+
+        function checkAnswer(userChoice) {
+            const currentQuizData = quizData[currentQuestion];
+
+            if (currentQuizData.options[userChoice] === currentQuizData.correctAnswer) {
+                userScore++;
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = userChoice === currentQuizData.options.indexOf(currentQuizData.correctAnswer) ? 'Correct!' : 'Incorrect';
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = `<div id="result">Your score: ${userScore} out of ${quizData.length}</div>`;
+        }
+
+        // Initial load
+        loadQuestion();
+    </script>
+</body>
+</html>
