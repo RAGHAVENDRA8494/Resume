@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #main-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Travel Management System</h1>
+    </div>
+
+    <div id="main-container">
+        <h2>Book a Trip</h2>
+        <form id="trip-form">
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" required>
+
+            <label for="departure-date">Departure Date:</label>
+            <input type="date" id="departure-date" name="departure-date" required>
+
+            <label for="return-date">Return Date:</label>
+            <input type="date" id="return-date" name="return-date" required>
+
+            <button type="button" onclick="bookTrip()">Book Trip</button>
+        </form>
+
+        <h2>Upcoming Trips</h2>
+        <table id="trip-table">
+            <thead>
+                <tr>
+                    <th>Destination</th
