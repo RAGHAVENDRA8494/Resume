@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #gameContainer {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #message {
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        #inputContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        #userInput {
+            width: 60%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #submitBtn {
+            width: 35%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submitBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="message">Guess a number between 1 and 100</div>
+        <div id="inputContainer">
+            <input type="number" id="userInput" placeholder="Enter your guess">
+            <button id="submitBtn" onclick="checkGuess()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Generate a random number between 1 and 100
+            const randomNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 0;
+
+            function checkGuess() {
+                const userInput = document.getElementById('userInput').value;
+                const messageDiv = document.getElementById('message');
+
+                if (userInput === '') {
+                    messageDiv.textContent = 'Please enter a guess.';
+                    return;
+                }
+
+                const userGuess = parseInt(userInput);
+
+                if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                    messageDiv.textContent = 'Please enter a valid number between 1 and 100.';
+                    return;
+                }
+
+                attempts++;
+
+                if (userGuess === randomNumber) {
+                    messageDiv.textContent = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+                    disableInput();
+                } else if (userGuess < randomNumber) {
+                    messageDiv.textContent = 'Too low. Try again.';
+                } else {
+                    messageDiv.textContent = 'Too high. Try again.';
+                }
+            }
+
+            function disableInput() {
+                document.getElementById('userInput').disabled = true;
+                document.getElementById('submitBtn').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
