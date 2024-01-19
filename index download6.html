@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Record System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #employeeForm {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #employeeList {
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .employee {
+            margin-bottom: 5px;
+        }
+
+        #nameInput,
+        #positionInput {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
+        #addEmployeeBtn {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #addEmployeeBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="employeeForm">
+        <div id="employeeList"></div>
+        <input type="text" id="nameInput" placeholder="Employee Name">
+        <input type="text" id="positionInput" placeholder="Position">
+        <button id="addEmployeeBtn">Add Employee</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.getElementById('nameInput');
+            const positionInput = document.getElementById('positionInput');
+            const addEmployeeBtn = document.getElementById('addEmployeeBtn');
+            const employeeListDiv = document.getElementById('employeeList');
+
+            addEmployeeBtn.addEventListener('click', function () {
+                const name = nameInput.value.trim();
+                const position = positionInput.value.trim();
+
+                if (name !== '' && position !== '') {
+                    addEmployee(name, position);
+                    renderEmployeeList();
+                    clearInputs();
+                } else {
+                    alert('Please enter name and position.');
+                }
+            });
+
+            function addEmployee(name, position) {
+                // Retrieve existing employees from localStorage
+                const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+                // Add the new employee
+                employees.push({ name, position });
+
+                // Save the updated employees back to localStorage
+                localStorage.setItem('employees', JSON.stringify(employees));
+            }
+
+            function renderEmployeeList() {
+                // Clear the employeeListDiv before rendering
+                employeeListDiv.innerHTML = '';
+
+                // Retrieve employees from localStorage
+                const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+                // Render each employee
+                employees.forEach(employee => {
+                    const employeeDiv = document.createElement('div');
+                    employeeDiv.classList.add('employee');
+                    employeeDiv.textContent = `Name: ${employee.name}, Position: ${employee.position}`;
+                    employeeListDiv.appendChild(employeeDiv);
+                });
+            }
+
+            function clearInputs() {
+                nameInput.value = '';
+                positionInput.value = '';
+            }
+
+            // Initial rendering when the page loads
+            renderEmployeeList();
+        });
+    </script>
+</body>
+</html>
