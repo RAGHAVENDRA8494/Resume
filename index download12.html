@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #todo-container {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        #new-todo {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-container">
+        <h1>ToDo App</h1>
+        <ul id="todo-list"></ul>
+        <input type="text" id="new-todo" placeholder="Add a new task">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const todoList = document.getElementById('todo-list');
+            const newTodoInput = document.getElementById('new-todo');
+
+            newTodoInput.addEventListener('keyup', function (event) {
+                if (event.key === 'Enter') {
+                    addTodo();
+                }
+            });
+
+            function addTodo() {
+                const task = newTodoInput.value.trim();
+                if (task !== '') {
+                    const todoItem = document.createElement('li');
+                    todoItem.classList.add('todo-item');
+                    todoItem.innerHTML = `
+                        <input type="checkbox">
+                        <span>${task}</span>
+                        <button onclick="removeTodo(this)">Remove</button>
+                    `;
+                    todoList.appendChild(todoItem);
+                    newTodoInput.value = '';
+                }
+            }
+
+            function removeTodo(button) {
+                const todoItem = button.closest('.todo-item');
+                todoList.removeChild(todoItem);
+            }
+        });
+    </script>
+</body>
+</html>
